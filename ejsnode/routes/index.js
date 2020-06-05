@@ -10,10 +10,6 @@ router.get('/index.html', function (req, res, next) {
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
-/* GET sanpham page. */
-router.get('/sanpham/:chisosanpham-:gia', function (req, res, next) {
-  res.send("Mã sản phẩm là: " + req.params.chisosanpham + " Giá sản phẩm là: " + req.params.gia);
-});
 /* GET tintuc page. */
 router.get('/tintuc', function (req, res, next) {
   res.render('tin', { title: 'Tin tuc', noidung: "Day là nội dung của tin tức" });
@@ -39,5 +35,18 @@ router.get('/contact.html', function (req, res, next) {
   res.render('contact', { title: 'Trang contact' });
 });
 
+
+/* GET sanpham page. */
+router.get('/sanpham/:chisosanpham-:gia', function (req, res, next) {
+  res.send("Mã sản phẩm là: " + req.params.chisosanpham + " Giá sản phẩm là: " + req.params.gia);
+});
+
+/* GET sanpham page. */
+router.get('/vu*ppam', function (req, res, next) {
+  res.send("Testf");
+});
+router.get('/*.:id', function (req, res, next) {
+  res.send("Link kieu tinh te  co ma la: "+ req.params.id );
+});
 
 module.exports = router;
