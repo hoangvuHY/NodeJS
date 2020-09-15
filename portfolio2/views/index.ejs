@@ -1,0 +1,52 @@
+<%include header %>
+
+<!-- lead -->
+
+
+<a class="ish-row ish-fullrow ish-lead" href="portfolio-detail">
+  <span class="ish-lead__caption ish-icon-up">Featured Portfolio</span>
+  <div class="ish-lead__image">
+    <img src="/img/header.jpg" alt="work in silent">
+  </div>
+  <h1 class="ish-lead__headline">
+    <span class="ish-lead__headline-inner">Workin<br>Silent</span>
+  </h1>
+</a>
+<!-- lead end -->
+
+
+
+<!-- content -->
+<div class="ish-row ish-content ish-portfolio ish-macy">
+
+  <!-- main content -->
+
+  <ul class="ish-portfolio-item ish-portfolio-filter">
+    <li class="ish-portfolio-filter__item ish-portfolio-filter--title">
+      <h5>Filter:</h5>
+    </li>
+    <li class="ish-portfolio-filter__item"><a class="ish-portfolio-filter__link ish-portfolio-filter__link--active"
+        href="#all">All</a></li>
+    <% data.products.forEach(function(product){ %>
+    <li class="ish-portfolio-filter__item"><a class="ish-portfolio-filter__link"
+        href="#<%= product.catalog %>"><%= product.catalog %></a></li>
+    <% }) %>
+
+  </ul>
+
+  <% data.products.forEach(function(product){ %>
+  <a class="ish-portfolio-item ish--tc13 ish-portfolio-<%= product.catalog %>"
+    href="/portfolio-detail/<%= product.SEOlink %>-<%= product.id %>">
+    <div class="ish-portfolio-item__image-container">
+      <img class="ish-portfolio-item__image" src="<%= product.bigImage %>" alt="business cards">
+    </div>
+    <div class="ish-portfolio-item__desc">
+      <span class="ish-portfolio-item__title"><%= product.title %></span>
+      <span class="ish-portfolio-item__subtitle"><%= product.catalog %></span>
+    </div>
+  </a>
+  <% }) %>
+  <!-- main content end -->
+</div>
+<!-- content end -->
+<%include footer %>
