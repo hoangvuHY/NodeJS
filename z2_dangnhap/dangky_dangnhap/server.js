@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 const AccountModels = require('./models/account');
+const accountRouter  = require('./router/account');
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -68,6 +69,9 @@ app.get('/', (req, res, next) => {
     res.json('Home');
 });
 
+
+
+app.use('/api/account/',accountRouter);
 
 app.listen(3000, () => {
     console.log('Server start');
