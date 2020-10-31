@@ -3,7 +3,7 @@ var app = express();
 const path = require('path');
 var bodyParser = require('body-parser');
 const UserModel = require('./models/User')
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 2;
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -29,12 +29,12 @@ app.get('/user', function(req, res, next) {
             .limit(PAGE_SIZE)
             .then((data) => {
 
-                UserModel.countDocuments().then((total) => {
+                UserModel.countDocuments().then((totalDocument) => {
                     // if (err) res.json(err);
-                    var totalPage = Math.ceil(total / PAGE_SIZE);
+                    // var totalPage = Math.ceil(totalDocument / PAGE_SIZE);
                     res.json({
-                        total: total,
-                        totalPage: totalPage,
+                        totalDocument: totalDocument,
+                        // totalPage: totalPage,
                         data: data
                     })
                 });

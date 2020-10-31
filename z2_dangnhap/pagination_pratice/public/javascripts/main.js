@@ -5,11 +5,11 @@ $('#paging').pagination({
         // you can return totalNumber by analyzing response content
         // return Math.floor(Math.random() * (1000 - 100)) + 100;
         // console.log(response);
-        return response.total;
+        return response.totalDocument;
     },
     showGoInput: true,
     showGoButton: true,
-    pageSize: 3,
+    pageSize: 2,
     pageRange: null,
     showPageNumbers: true,
     afterPageOnClick: (event, pageNumber) => {
