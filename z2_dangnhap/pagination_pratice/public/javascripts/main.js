@@ -1,30 +1,52 @@
 $('#paging').pagination({
-  dataSource: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
-  pageSize: 2,
-  afterPageOnClick: (event, pageNumber) => {
-    // console.log(p);
-    loadPage(pageNumber);
-  }
+    dataSource: '/user?page=1',
+    locator: 'data',
+    totalNumberLocator: function(response) {
+        // you can return totalNumber by analyzing response content
+        // return Math.floor(Math.random() * (1000 - 100)) + 100;
+        // console.log(response);
+        return response.total;
+    },
+    showGoInput: true,
+    showGoButton: true,
+    pageSize: 3,
+    pageRange: null,
+    showPageNumbers: true,
+    afterPageOnClick: (event, pageNumber) => {
+        loadPage(pageNumber);
+    },
+    afterPreviousOnClick: (event, pageNumber) => {
+        loadPage(pageNumber);
+    },
+    afterNextOnClick: (event, pageNumber) => {
+        loadPage(pageNumber);
+    },
+    afterGoInputOnEnter: (event, pageNumber) => {
+        loadPage(pageNumber);
+    },
+    afterGoButtonOnClick: (event, pageNumber) => {
+        loadPage(pageNumber);
+    }
 })
 
 var current = 1;
-function loadPage(page) {
-  $("#container").empty();
-  // current = page;
-  $.ajax({
-    url: './user?page=' + page,
-    method: 'get'
-  }).then((res) => {
-    console.log(res.data);
-    console.log(res.totalPage);
-    res.data.forEach((element) => {
-      console.log(element);
-      var item = $(`
-      <h3>${element.username}</h3>
-      `)
-      $('#container').append(item);
-    })
 
-  })
-    .catch((err) => { console.log(error); })
+function loadPage(page) {
+    $("#container").empty();
+    // current = page;
+    $.ajax({
+            url: './user?page=' + page,
+            method: 'get'
+        }).then((res) => {
+            // console.log(res.data); 
+            res.data.forEach((element) => {
+                var item = $(`
+      <h3>${element.username}: ${element.password}</h3>
+      `)
+                $('#container').append(item);
+            })
+
+        })
+        .catch((err) => { console.log(error); })
 }
+loadPage(1);
