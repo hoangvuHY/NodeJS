@@ -45,7 +45,7 @@ app.post('/login', (req, res, next) => {
 })
 
 
-app.get('/private', (req, res, next) => {
+app.get('/task', (req, res, next) => {
     //check
     try {
         // var token = req.params.token;
@@ -55,10 +55,20 @@ app.get('/private', (req, res, next) => {
             next();
         }
     } catch (error) {
-        res.json('Ban can phai login');
+        res.redirect('/login');
     }
 }, (req, res, next) => {
-    res.json('welcome')
+    res.json('ALL TASK')
+}, )
+app.get('/student', (req, res, next) => {
+    next()
+}, (req, res, next) => {
+    res.json('STUDENT')
+}, )
+app.get('/teacher', (req, res, next) => {
+    next()
+}, (req, res, next) => {
+    res.json('TEACHER')
 }, )
 app.listen(3000, () => {
     console.log('Server start');
