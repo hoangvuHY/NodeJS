@@ -27,8 +27,7 @@ app.post('/login', (req, res, next) => {
             if (data) {
                 return res.json({
                     mess: 'Success',
-                    token: token,
-                    username: data.username
+                    token: token
                 })
             } else {
                 console.log('B can dang nhap');
@@ -36,19 +35,61 @@ app.post('/login', (req, res, next) => {
         })
         .catch(err => res.json('Server Error'));
 });
-app.get('/private', (req, res, next) => {
+
+
+var checkLogin = (req, res, next) => {
     var token = req.cookies.token;
-
-
-    if (token) {
+    try {
         var data = jwt.verify(token, 'idUser');
-        console.log(data);
+        AccountModels.findById(data._id)
+            .then((data) => {
+                if (data) {
+                    req.data = data;
+                    next();
+                } else {
+                    res.redirect('/login');
+                    alert("Ban chua dang nhap");
+                }
+            })
+            .catch(err => res.status(5000).json("ERROR SERVER" + err));
+    } catch (error) {
+        console.log(error);
+    }
+};
+var checkStudent = (req, res, next) => {
+    var role = req.data.role;
+    console.log(req.data.role);
+    if (role >= 1) {
         next();
     } else {
-        res.redirect('/login');
+        res.json("NOT PERMISSION");
     }
-}, (req, res, next) => {
-    res.json('welcome: ')
+}
+var checkTeacher = (req, res, next) => {
+    var role = req.data.role;
+    if (role >= 2) {
+        next();
+    } else {
+        res.json("NOT PERMISSION");
+    }
+}
+var checkManager = (req, res, next) => {
+    var role = req.data.role;
+    if (role >= 3) {
+        next();
+    } else {
+        res.json("NOT PERMISSION");
+    }
+}
+
+app.get('/task', checkLogin, checkStudent, (req, res, next) => {
+    res.json('STUDENT ')
+});
+app.get('/teacher', checkLogin, checkTeacher, (req, res, next) => {
+    res.json('TEACHER ')
+});
+app.get('/manager', checkLogin, checkManager, (req, res, next) => {
+    res.json('MANAGER ')
 });
 app.listen(3000, () => {
     console.log('Server start');
