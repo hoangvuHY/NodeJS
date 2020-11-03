@@ -5,8 +5,9 @@ var jwt = require('jsonwebtoken');
 var bodyParser = require('body-parser');
 const AccountModels = require('./models/Account')
 app.use(bodyParser.urlencoded({ extended: false }));
-var cookieParser = require('cookie-parser')
-    // parse application/json
+var cookieParser = require('cookie-parser');
+const e = require('express');
+// parse application/json
 app.use(cookieParser());
 app.use(bodyParser.json());
 
@@ -45,31 +46,64 @@ app.post('/login', (req, res, next) => {
 })
 
 
-app.get('/task', (req, res, next) => {
-    //check
+var checkLogin = (req, res, next) => {
+    //check 
     try {
-        // var token = req.params.token;
+
         var token = req.cookies.token;
         var data = jwt.verify(token, 'mk');
-        if (data) {
-            next();
-        }
+        AccountModels.findById(data._id)
+            .then((data) => {
+                if (data) {
+                    req.data = data;
+                    next()
+                } else {
+                    res.json("NOT PERMISSION")
+                }
+            })
     } catch (error) {
-        res.redirect('/login');
+        res.status(500).json("Error Server: " + error)
     }
-}, (req, res, next) => {
+}
+var checkStudent = (req, res, next) => {
+    var role = req.data.role;
+    if (role >= 1) {
+        next();
+    } else {
+        res.json("NOT PERMISSION")
+    }
+}
+var checkTeacher = (req, res, next) => {
+    var role = req.data.role;
+    if (role >= 2) {
+        next();
+    } else {
+        res.json("NOT PERMISSION");
+    }
+}
+
+var checkManager = (req, res, next) => {
+    var role = req.data.role;
+    if (role >= 3) {
+        next();
+    } else {
+        res.json("NOT PERMISSION")
+    }
+}
+app.get('/task', checkLogin, checkStudent, (req, res, next) => {
+    console.log(req.data);
     res.json('ALL TASK')
-}, )
-app.get('/student', (req, res, next) => {
+});
+app.get('/student', checkLogin, checkTeacher, (req, res, next) => {
     next()
 }, (req, res, next) => {
     res.json('STUDENT')
-}, )
-app.get('/teacher', (req, res, next) => {
+});
+app.get('/teacher', checkLogin, checkManager, (req, res, next) => {
     next()
 }, (req, res, next) => {
     res.json('TEACHER')
-}, )
+});
 app.listen(3000, () => {
     console.log('Server start');
 });
