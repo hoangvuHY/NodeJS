@@ -14,96 +14,104 @@ app.use(bodyParser.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //get login
+app.get('/', (req, res, next) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+})
+//get login
 app.get('/login', (req, res, next) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
+  res.sendFile(path.join(__dirname, 'login.html'));
 })
 
 //post login
 app.post('/login', (req, res, next) => {
-    var username = req.body.username;
-    var password = req.body.password;
-    AccountModels.findOne({
-            username: username,
-            password: password
-        })
-        .then((data) => {
-            if (data) {
-                var token = jwt.sign({
-                    _id: data._id
-                }, 'mk');
-                return res.json({
-                    message: 'thanh cong',
-                    token: token
-                });
-            } else {
-                res.json("That bai")
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).json("Server error");
-        })
+  var username = req.body.username;
+  var password = req.body.password;
+
+  console.log(username);
+  console.log(password);
+  AccountModels.findOne({
+    username: username,
+    password: password
+  })
+    .then((data) => {
+      console.log(data);
+      if (data) {
+        var token = jwt.sign({
+          _id: data._id
+        }, 'mk');
+        return res.json({
+          message: 'thanh cong',
+          token: token
+        });
+      } else {
+        res.json("That bai")
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json("Server error");
+    })
 })
 
 
 var checkLogin = (req, res, next) => {
-    //check 
-    try {
+  //check 
+  try {
 
-        var token = req.cookies.token;
-        var data = jwt.verify(token, 'mk');
-        AccountModels.findById(data._id)
-            .then((data) => {
-                if (data) {
-                    req.data = data;
-                    next()
-                } else {
-                    res.json("NOT PERMISSION")
-                }
-            })
-    } catch (error) {
-        res.status(500).json("Error Server: " + error)
-    }
+    var token = req.cookies.token;
+    var data = jwt.verify(token, 'mk');
+    AccountModels.findById(data._id)
+      .then((data) => {
+        if (data) {
+          req.data = data;
+          next()
+        } else {
+          res.json("NOT PERMISSION")
+        }
+      })
+  } catch (error) {
+    res.status(500).json("Error Server: " + error)
+  }
 }
 var checkStudent = (req, res, next) => {
-    var role = req.data.role;
-    if (role >= 1) {
-        next();
-    } else {
-        res.json("NOT PERMISSION")
-    }
+  var role = req.data.role;
+  if (role >= 1) {
+    next();
+  } else {
+    res.json("NOT PERMISSION")
+  }
 }
 var checkTeacher = (req, res, next) => {
-    var role = req.data.role;
-    if (role >= 2) {
-        next();
-    } else {
-        res.json("NOT PERMISSION");
-    }
+  var role = req.data.role;
+  if (role >= 2) {
+    next();
+  } else {
+    res.json("NOT PERMISSION");
+  }
 }
 
 var checkManager = (req, res, next) => {
-    var role = req.data.role;
-    if (role >= 3) {
-        next();
-    } else {
-        res.json("NOT PERMISSION")
-    }
+  var role = req.data.role;
+  if (role >= 3) {
+    next();
+  } else {
+    res.json("NOT PERMISSION")
+  }
 }
 app.get('/task', checkLogin, checkStudent, (req, res, next) => {
-    console.log(req.data);
-    res.json('ALL TASK')
+  console.log(req.data);
+  res.json('ALL TASK')
 });
 app.get('/student', checkLogin, checkTeacher, (req, res, next) => {
-    next()
+  next()
 }, (req, res, next) => {
-    res.json('STUDENT')
+  res.json('STUDENT')
 });
 app.get('/teacher', checkLogin, checkManager, (req, res, next) => {
-    next()
+  next()
 }, (req, res, next) => {
-    res.json('TEACHER')
+  res.json('TEACHER')
 });
 app.listen(3000, () => {
-    console.log('Server start');
+  console.log('Server start');
 });
