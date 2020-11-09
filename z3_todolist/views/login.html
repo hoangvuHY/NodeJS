@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    a,
+    #btn {
+      width: 70px;
+      height: 40px;
+      background: lightblue;
+      display: inline-block;
+      padding: 9px;
+      box-sizing: border-box;
+      text-decoration: none;
+      font-family: monospace;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    #btn {
+      width: 100px;
+    }
+
+    input {
+
+      width: 200px;
+      height: 20px;
+
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+
+<body>
+  <form>
+    <h1>Đăng ký</h1>
+    <p>Email </p>
+    <input type="email" name="email" id="email" placeholder="Enter your email address">
+    <p>Password </p>
+    <input type="password" name="password" id="password" placeholder="Enter your password">
+    <br>
+    <button type="reset" id="btn">Login</button>
+  </form>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+    $("#btn").click(function () {
+      var email = $("#email").val();
+      var password = $("#password").val();
+      $.ajax({
+        url: '/users/login',
+        method: 'POST',
+        data: {
+          email, password
+        }
+      })
+        .then((data) => {
+          if (!data.error && data.status === 200) {
+            alert(data.message);
+            window.location.href = '/home';
+          }
+          alert(data.message);
+        })
+    })
+  </script>
+</body>
+
+</html>
