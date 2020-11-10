@@ -1,7 +1,7 @@
 let userService = require('../services/userServices');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
+const jwt = require('jsonwebtoken')
 function signUpController(req, res) {
   let { email, username, password } = req.body;
   bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -47,10 +47,14 @@ function loginController(req, res) {
             message: 'Tài khoản hoặc mật khẩu không chính xác!'
           })
         } else {
+          var token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { algorithm: "HS512", expiresIn: "1d" });
+          //Lưu trực tiếp trên server
+          // res.cookie("token", token, { maxAge: 9000000, expires: 60 * 60 * 1000 * 24 * 1 })
           return res.json({
             error: false,
             status: 200,
-            message: 'Đăng nhập tài khoản thành công!'
+            message: 'Đăng nhập tài khoản thành công!',
+            token: token
           })
         }
       });
@@ -88,6 +92,11 @@ function loginController(req, res) {
          message: 'Đăng nhập tài khoản không thành công!'
        })
      }); */
+}
+
+function checkUserControllers(req, res) {
+  var data = jwt.verify(req.cookies.token, process.env.JWT_SECRET)
+  res.json(data);
 }
 function getAllUserController(req, res) {
   userService.getAllUserService()
@@ -213,5 +222,6 @@ module.exports = {
   getAllUserController,
   getDetailUserController,
   deleteUserController,
-  updateUserController
+  updateUserController,
+  checkUserControllers
 }

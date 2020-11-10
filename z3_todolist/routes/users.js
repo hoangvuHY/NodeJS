@@ -5,7 +5,8 @@ var { signUpController,
   getAllUserController,
   getDetailUserController,
   deleteUserController,
-  updateUserController
+  updateUserController,
+  checkUserControllers
 
 } = require('../controllers/userControllers');
 
@@ -22,5 +23,6 @@ router.get('/:idUser', getDetailUserController);
 router.put('/:idUser', updateUserController);
 /* delete user deleteUser listing. */
 router.delete('/:idUser', deleteUserController);
-
+/* get check users listing. */
+router.get('/check/check-user', checkUserControllers);
 module.exports = router;
