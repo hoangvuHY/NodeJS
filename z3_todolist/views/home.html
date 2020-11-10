@@ -18,6 +18,25 @@
   </div>
   <button type="reset" id="btn-getCookie">Get Cookie</button>
 
+  <!-- Modal -->
+  <div class="modal fade" id="detail-user" tabindex="-1" role="dialog" aria-labelledby="detail-userLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detail-userLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body modal-detail-user">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
@@ -67,6 +86,13 @@
                   <button type="button" class="btn btn-success btn-save d-none" onClick=handleSave.call(this) data-id=${user._id} >Save</button>
                   <button type="button" class="btn btn-secondary btn-cancel  d-none">Cancel</button>
                   <button type="button" class="btn btn-danger  btn-delete"  data-id=${user._id}>Delete</button>
+                  <!-- Button trigger modal -->
+                  <button id="btn-detail-user"  onClick=handleDetailUser.call(this) data-id=${user._id} type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail-user"> 
+                    Detail
+                  </button>
+                  <button class="btn btn-secondary" id="btn-detail-2"> 
+                    Detail 2
+                  </button>
                  </div>
               </div>         `;
               $(".container .row").append(template);
@@ -94,6 +120,13 @@
                   <button type="button" class="btn btn-success btn-save d-none" onClick=handleSave.call(this) data-id=${user._id} >Save</button>
                   <button type="button" class="btn btn-secondary btn-cancel d-none">Cancel</button>
                   <button type="button" class="btn btn-danger btn-delete"  data-id=${user._id}>Delete</button>
+                  <!-- Button trigger modal -->
+                  <button id="btn-detail-user"  onClick=handleDetailUser.call(this) data-id=${user._id} type="button" class="btn btn-primary" data-toggle="modal" data-target="#detail-user"> 
+                    Detail
+                  </button>
+                  <button  data-id=${user._id} onClick=handleDetailUser2.call(this)  class="btn btn-secondary" id="btn-detail-2"> 
+                    Detail 2
+                  </button>
                  </div>
               </div>         `;
               $(".container .row").append(template);
@@ -171,6 +204,90 @@
       $(template).insertAfter($(this));
       Cookies.get('token') // => 'value'
     })
+
+    function handleDetailUser() {
+      let _id = $(this).attr('data-id');
+      $.ajax({
+        url: "/users/" + _id,
+        method: 'get'
+      }).then((dataUser) => {
+        var { data } = dataUser;
+        // console.log(data);
+        $(".modal-detail-user").empty()
+        let template = `
+              <div class="card col-sm-12 col-md-12 "  ">
+                <div class="card-body">
+                  <h6 class="card-title">
+                    Email: <span>${data.email}</span>
+                    <input type="email" name="email" class="d-none" id="email-${data._id}" value="${data.email}">
+                  </h6>
+                  <h6 class="card-title">
+                    Username: <span>${data.username}</span>
+                  </h6>
+                  <h6 class="card-title">
+                    Password: <span>${data.password}</span>
+                  </h6>   
+                  <h6 class="card-title age ">
+                    Age: <span>${data.age}</span>
+                  </h6> 
+                  <h6 class="card-title  ">
+                    Time create user: <span>${new Date(data.createdAt).toLocaleDateString()}</span>
+                  </h6> 
+                  <h6 class="card-title ">
+                    Time Update user: <span>${new Date(data.updatedAt).toLocaleDateString()}</span>
+                  </h6> 
+                   
+                 </div>
+              </div>         `;
+        $(".modal-detail-user").append(template);
+      })
+      console.log(_id);
+    }
+    function handleDetailUser2() {
+      let _id = $(this).attr('data-id');
+      // window.location.href = '/users/' + _id;
+      // window.location.href + '/users/' + _id
+      // console.log(window.location.href + '/users/' + _id);
+      console.log(_id);
+
+      $.ajax({
+        url: '/users/' + _id,
+        method: 'get'
+      })
+        .then((dataUser) => {
+          var { data } = dataUser;
+          $('body').empty();
+          let template = `
+              <div class="card col-sm-12 col-md-12 "  ">
+                <div class="card-body">
+                  <h6 class="card-title">
+                    Email: <span>${data.email}</span>
+                    <input type="email" name="email" class="d-none" id="email-${data._id}" value="${data.email}">
+                  </h6>
+                  <h6 class="card-title">
+                    Username: <span>${data.username}</span>
+                  </h6>
+                  <h6 class="card-title">
+                    Password: <span>${data.password}</span>
+                  </h6>   
+                  <h6 class="card-title age ">
+                    Age: <span>${data.age}</span>
+                  </h6> 
+                  <h6 class="card-title  ">
+                    Time create user: <span>${new Date(data.createdAt).toLocaleDateString()}</span>
+                  </h6> 
+                  <h6 class="card-title ">
+                    Time Update user: <span>${new Date(data.updatedAt).toLocaleDateString()}</span>
+                  </h6> 
+                   
+                 </div>
+              </div>         `;
+          $('body').append(template); 
+        })
+
+    }
+
+
   </script>
 </body>
 

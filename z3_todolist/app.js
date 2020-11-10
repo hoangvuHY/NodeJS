@@ -11,10 +11,10 @@ var bodyParser = require('body-parser');
 var app = express();
 var jwt = require('jsonwebtoken')
 var jwtComponent = require('./util/jwtComponent')
+var UserModel = require("./models/user.model")
 
 var connectDB = require('./config/dbConnect');
 connectDB();
-
 
 //bodyParser   
 // parse application/x-www-form-urlencoded
@@ -42,9 +42,18 @@ app.use('/users', usersRouter);
 app.get('/get-token', (req, res) => {
   // console.log(req.headers.authorization.split(' ')[1]);
 
-  var token = req.body.token || req.headers.authorization;
+  var token = req.body.token || req.headers.authorization.split(' ')[1];
   console.log(token);
-  jwtComponent.verifyJWT(token, process.env.JWT_SECRET);
+  var data = jwtComponent.verifyJWT(token, process.env.JWT_SECRET);
+  // var data = jwt.verify(token, process.env.JWT_SECRET);
+  console.log(data);
+ 
+  /* UserModel.findOne({ _id: data._id })
+    .then((data) => {
+      console.log(data);
+    }) 
+  })
+ */
 
   // console.log(data);
 })
