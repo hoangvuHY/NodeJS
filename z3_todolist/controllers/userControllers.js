@@ -2,6 +2,9 @@ let userService = require('../services/userServices');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken')
+let TokenModel = require('../models/token');
+
+
 function signUpController(req, res) {
   let { email, username, password } = req.body;
   bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -47,15 +50,40 @@ function loginController(req, res) {
             message: 'Tài khoản hoặc mật khẩu không chính xác!'
           })
         } else {
-          var token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { algorithm: "HS512", expiresIn: "1d" });
+          var accessToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { algorithm: "HS512", expiresIn: "1d" });
+          var refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { algorithm: "HS512", expiresIn: "3650d" });
+          TokenModel.findOne({ idUser: user._id })
+            .then((checkToken) => {
+              if (!checkToken) {
+                //Người dùng đăng nhập lần đầu
+                TokenModel.create({ idUser: user._id, value: refreshToken })
+                  .then(() => {
+                    return res.json({
+                      error: false,
+                      status: 200,
+                      message: 'Đăng nhập tài khoản thành công!',
+                      accessToken, refreshToken
+                    })
+                  })
+              } else {
+                TokenModel.updateOne({ idUser: user._id }, { value: refreshToken })
+                  .then(() => {
+                    //Người dùng đăng nhập cac lan khac
+
+                    return res.json({
+                      accessToken, refreshToken
+                    })
+                  })
+              }
+            })
           //Lưu trực tiếp trên server , expires: 60 * 60 * 1000 * 24 * 1 
-          res.cookie("token", token, { maxAge: 60 * 60 * 1000 * 24 * 1 })
-          return res.json({
+          // res.cookie("token", token, { maxAge: 60 * 60 * 1000 * 24 * 1 })
+          /* return res.json({
             error: false,
             status: 200,
             message: 'Đăng nhập tài khoản thành công!',
-            token: token
-          })
+            token: accessToken
+          }) */
         }
       });
     })
