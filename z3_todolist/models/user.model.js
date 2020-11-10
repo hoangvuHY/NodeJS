@@ -4,7 +4,11 @@ let userSchema = new Schema({
   email: String,
   username: String,
   password: String,
-  age: Number
+  age: Number,
+  idJob:[{
+    type: String,
+    ref:"job"
+  }]
 }, {
   collection: 'user',
   timestamps: true

@@ -28,11 +28,16 @@ function deleteUserService(id) {
   return UserModel.deleteOne({ _id: id });
 }
 
+function checkEmail(email) {
+  return UserModel.findOne({ email })
+}
+
 module.exports = {
   signUp,
   login,
   getAllUserService,
   getDetailUserService,
   updateUserService,
-  deleteUserService
+  deleteUserService,
+  checkEmail
 }
