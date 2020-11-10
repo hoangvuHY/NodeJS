@@ -71,6 +71,9 @@ function loginController(req, res) {
                     //Người dùng đăng nhập cac lan khac
 
                     return res.json({
+                      error: false,
+                      status: 200,
+                      message: 'Đăng nhập tài khoản thành công!',
                       accessToken, refreshToken
                     })
                   })
