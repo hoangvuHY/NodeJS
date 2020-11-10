@@ -9,7 +9,8 @@ var usersRouter = require('./routes/users');
 //bodyParser
 var bodyParser = require('body-parser');
 var app = express();
-
+var jwt = require('jsonwebtoken')
+var jwtComponent = require('./util/jwtComponent')
 
 var connectDB = require('./config/dbConnect');
 connectDB();
@@ -17,7 +18,7 @@ connectDB();
 
 //bodyParser   
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false })) ;
+app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
@@ -38,12 +39,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.get('/get-token', (req, res) => {
+  // console.log(req.headers.authorization.split(' ')[1]);
+
+  var token = req.body.token || req.headers.authorization;
+  console.log(token);
+  jwtComponent.verifyJWT(token, process.env.JWT_SECRET);
+
+  // console.log(data);
+})
+
+
+
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

@@ -48,8 +48,8 @@ function loginController(req, res) {
           })
         } else {
           var token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { algorithm: "HS512", expiresIn: "1d" });
-          //Lưu trực tiếp trên server
-          // res.cookie("token", token, { maxAge: 9000000, expires: 60 * 60 * 1000 * 24 * 1 })
+          //Lưu trực tiếp trên server , expires: 60 * 60 * 1000 * 24 * 1 
+          res.cookie("token", token, { maxAge: 60 * 60 * 1000 * 24 * 1 })
           return res.json({
             error: false,
             status: 200,

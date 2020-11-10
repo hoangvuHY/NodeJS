@@ -44,7 +44,6 @@
     <input type="password" name="password" id="password" placeholder="Enter your password">
     <br>
     <button type="reset" id="btn">Login</button>
-    <button type="reset" id="btn-getCookie">Get Cookie</button>
   </form>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
@@ -72,15 +71,7 @@
           alert(data.message);
         })
     })
-    $("#btn-getCookie").click(function (e) {
-      e.preventDefault()
 
-      var template = `
-        <p>Giá trị cookie là: ${Cookies.get('token')}</p>
-        `;
-      $(template).insertAfter($(this));
-      Cookies.get('token') // => 'value'
-    })
   </script>
 </body>
 
