@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+  <p>Email</p>
+  <input type="text" name="email" id="email">
+  <p>Password</p>
+  <input type="password" name="password" id="password">
+  <button id="btn">Login</button>
+
+
+
+  <script>
+    $("#btn").click(() => {
+      console.log('heheheheeh');
+      $.ajax({
+        url: "/auth/login",
+        method: "post",
+        data: {
+          email: $("#email").val(),
+          password: $("#password").val(),
+        }
+      }).then((data) => {
+
+        console.log("data tra ve la ",data);
+        if (!data.error) {
+          window.location.href = '/home'
+        }
+      })
+    })
+  </script>
+</body>
+
+</html>

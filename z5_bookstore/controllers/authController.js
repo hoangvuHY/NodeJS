@@ -42,12 +42,15 @@ let loginController = (req, res) => {
       // mã hóa id người dùng vào cookie và lưu vào cookie
       var token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
       res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000 * 1 })
-      
+      req.user["password"] = undefined;
 
       return res.status(200).json({
         error: false,
         status: 200,
-        message: "Bạn đã đăng nhập thành công"
+        message: "Bạn đã đăng nhập thành công",
+        data: {
+          user: req.user
+        }
       });
     } else {
       return res.status(400).json({

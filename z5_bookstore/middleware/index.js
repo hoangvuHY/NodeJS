@@ -78,7 +78,7 @@ let checkAuth = async (req, res, next) => {
 }
 
 let checkAdmin = async (req, res, next) => {
-  console.log(req.userLocal.role );
+  console.log(req.userLocal.role);
   // check xem có phải admin không
   if (req.userLocal.role == 'admin') {
     next();
