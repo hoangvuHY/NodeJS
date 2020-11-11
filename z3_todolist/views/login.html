@@ -61,11 +61,11 @@
         }
       })
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (!data.error && data.status === 200) {
-            // console.log(data);
+            console.log(data);
             //Lưu trên client
-            Cookies.set('token', data.accessToken, { expires: '1d' });
+            Cookies.set('token', data.accessToken, { expires: 1 });
             alert(data.message);
             window.location.href = '/home';
           }

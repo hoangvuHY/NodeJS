@@ -6,11 +6,15 @@ let TokenModel = require('../models/token');
 
 
 function signUpController(req, res) {
-  let { email, username, password } = req.body;
+  let { email, username, password, role } = req.body;
+  console.log(role);
+  if (role === 'admin') role = 'user';
+  console.log(role);
+
   bcrypt.genSalt(saltRounds, function (err, salt) {
     bcrypt.hash(password, salt, function (err, hash) {
       // Store hash in your password DB. 
-      userService.signUp(email, username, hash)
+      userService.signUp(email, username, hash, role)
         .then(() => {
           return res.json({
             error: false,
@@ -52,6 +56,7 @@ function loginController(req, res) {
         } else {
           var accessToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { algorithm: "HS512", expiresIn: "1d" });
           var refreshToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { algorithm: "HS512", expiresIn: "3650d" });
+          res.cookie("token", accessToken, { maxAge: 60 * 60 * 1000 * 24 * 1 })
           TokenModel.findOne({ idUser: user._id })
             .then((checkToken) => {
               if (!checkToken) {

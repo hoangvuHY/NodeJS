@@ -5,10 +5,12 @@ let userSchema = new Schema({
   username: String,
   password: String,
   age: Number,
-  idJob:[{
+  role: String,
+
+  /* idJob: [{
     type: String,
-    ref:"job"
-  }]
+    ref: "job"
+  }] */
 }, {
   collection: 'user',
   timestamps: true
