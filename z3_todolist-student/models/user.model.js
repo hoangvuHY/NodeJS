@@ -1,18 +1,16 @@
-let mongoose = require('mongoose');
+let mongoose = require('../config/dbConnect');
 let Schema = mongoose.Schema;
 let userSchema = new Schema({
   email: String,
-  username: String,
   password: String,
-  age: Number,
-  role: String,
-
-  /* idJob: [{
+  role: {
     type: String,
-    ref: "job"
-  }] */
+    default: "user"
+  }
 }, {
-  collection: 'user',
+  collection: 'users',
   timestamps: true
 })
-module.exports = mongoose.model('user', userSchema);
+
+var userModel = mongoose.model('users', userSchema);
+module.exports = userModel;

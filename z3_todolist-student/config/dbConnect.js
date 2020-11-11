@@ -1,8 +1,8 @@
+const mongoose = require('mongoose');
 // getting-started.js
 var connectDB = () => {
-  const mongoose = require('mongoose');
-  let URL = `${process.env.DB_PROTOCOL}://${process.env.DB_HOST}/${process.env.DB_NAME}`;
-  mongoose.connect(URL, {
+  // let URL = ``;
+  mongoose.connect("mongodb://localhost/project", {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
@@ -13,5 +13,5 @@ var connectDB = () => {
   });
   return mongoose;
 };
-
-module.exports = connectDB;  
+connectDB();
+module.exports = mongoose;  
