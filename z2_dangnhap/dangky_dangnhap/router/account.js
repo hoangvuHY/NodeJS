@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
   })
     .then((data) => {
       res.json('Add username success');
-    }).catch((err) => { res.status(500).json('Error server') })
+    }).catch((err) => { res.json('Error server') })
 });
 router.put('/:id', (req, res, next) => {
   var id = req.params.id;
@@ -31,7 +31,7 @@ router.put('/:id', (req, res, next) => {
     .then((data) => {
       res.json('Update Succuss');
     }).catch((err) => {
-      res.status(500).json('Server error');
+      res.json('Server error');
     })
 });
 router.delete('/:id', (req, res, next) => {
@@ -41,7 +41,7 @@ router.delete('/:id', (req, res, next) => {
     .then((data) => {
       res.json('Delete Succuss');
     }).catch((err) => {
-      res.status(500).json('Server error');
+      res.json('Server error');
     });
 });
 

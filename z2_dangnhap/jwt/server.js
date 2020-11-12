@@ -49,7 +49,7 @@ app.post('/login', (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json("Server error");
+      res.json("Server error");
     })
 })
 
@@ -70,7 +70,7 @@ var checkLogin = (req, res, next) => {
         }
       })
   } catch (error) {
-    res.status(500).json("Error Server: " + error)
+    res.json("Error Server: " + error)
   }
 }
 var checkStudent = (req, res, next) => {

@@ -28,7 +28,7 @@ router.post('/', function (req, res, next) {
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).json("Server error");
+      res.json("Server error");
     })
 });
 

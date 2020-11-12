@@ -31,7 +31,7 @@ app.post('/register', (req, res, next) => {
 
         })
         .catch((err) => {
-            res.status(500).json('Create fail')
+            res.json('Create fail')
         })
         /*     AccountModels.create({
                         username: req.body.username,
@@ -42,7 +42,7 @@ app.post('/register', (req, res, next) => {
 
                     })
                     .catch((err) => {
-                        res.status(500).json('Create fail')
+                        res.json('Create fail')
                     }) */
 })
 
@@ -58,10 +58,10 @@ app.post('/login', (req, res, next) => {
             if (data) {
                 res.json('Login success');
             } else {
-                res.status(400).json('Not found data')
+                res.json('Not found data')
             }
         })
-        .catch((err) => { res.status(500).json('find fail') })
+        .catch((err) => { res.json('find fail') })
         // res.json('Home');
 });
 

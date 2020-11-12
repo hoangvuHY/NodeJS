@@ -1,0 +1,47 @@
+*{
+  margin: 0;padding: 0;
+}
+#errorFullName{
+  display:none;
+  color:red;
+}
+ 
+button.btn.btn-outline-info.btn-rounded.btn-block.my-4.waves-effect.z-depth-0 {
+    border-radius: 22px;
+    transition: 0.3s;
+    margin: auto;
+}
+
+.md-form input {
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid #CED4DA;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.md-form input:focus {
+    border: none;
+    box-shadow: none;
+    border-bottom: 2px solid #CED4DA;
+}
+
+.md-form {
+    margin-top: 10px;
+}
+
+.md-form label {
+    text-align: left !important;
+}
+ 
+.col-md-10.col-sm-4.col-xs-6.card {
+    margin: 100px auto !important;
+    box-shadow: 0px 0px 20px 2px rgba(0, 0, 255, .2);
+    width: 60%;
+}
+
+h5.card-header.info-color.white-text.text-center.py-4 {
+    background: #33B5E5;
+    border-radius: 10px;
+    color: white;
+    margin-top: 10px;
+} 

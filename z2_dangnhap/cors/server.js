@@ -54,7 +54,7 @@ app.get('/user', function(req, res, next) {
                 // res.json(data);
             })
             .catch((err) => {
-                res.status(500).json('Error server');
+                res.json('Error server');
             });
     } else {
         UserModel.find({})
@@ -70,7 +70,7 @@ app.get('/user', function(req, res, next) {
                 });
             })
             .catch((err) => {
-                res.status(500).json('Error server');
+                res.json('Error server');
             });
     }
 });

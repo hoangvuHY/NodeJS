@@ -29,7 +29,7 @@ router.get('/home', async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    return res.json({
       error: true,
       status: 500,
       message: "Bạn cần đăng nhập "

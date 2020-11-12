@@ -9,7 +9,7 @@ let createBorrowBookController = async (req, res) => {
       message: "Mượn sách thành công"
     });
   } catch (error) { 
-    return res.status(400).json({
+    return res.json({
       error: true,
       status: 400,
       message: "Mượn sách không thành công"

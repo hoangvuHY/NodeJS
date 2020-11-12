@@ -10,7 +10,7 @@ let creatBookController = async (req, res) => {
       message: "Tạo sách thành công"
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       error: true,
       status: 500,
       message: "Tạo sách không thành công"

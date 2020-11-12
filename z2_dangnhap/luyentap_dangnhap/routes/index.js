@@ -27,7 +27,7 @@ router.post('/register', function (req, res, next) {
     }).then((data) => {
       // res.render('login', { title: 'Login' })
       res.redirect('/login');
-    }).catch((err) => { res.status(500).json('Fail') })
+    }).catch((err) => { res.json('Fail') })
 });
 router.get('/login', function (req, res, next) {
   res.render('login', { title: 'Login' });
@@ -52,7 +52,7 @@ router.post('/login', function (req, res, next) {
     })
     .catch((err) => {
       // console.log(err);
-      res.status(500).json("Server error");
+      res.json("Server error");
     })
 
   /* 
@@ -63,7 +63,7 @@ router.post('/login', function (req, res, next) {
         } else {
           res.json('Tai khoan hoac mat khau khong chinh xac')
         }
-      }).catch((err) => { res.status(500).json('Fail') }); */
+      }).catch((err) => { res.json('Fail') }); */
   // res.render('index', { title: 'Register' });
 });
 module.exports = router;
