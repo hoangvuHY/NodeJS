@@ -11,6 +11,10 @@ router.get('/', function (req, res, next) {
 router.get('/login', function (req, res, next) {
   res.render('login');
 });
+/* GET login page. */
+router.get('/register', function (req, res, next) {
+  res.render('register');
+});
 /* GET home page. */
 router.get('/home', checkAuth, checkAuthController);
 module.exports = router;

@@ -4,6 +4,7 @@ let isEmailMiddleware = async (req, res, next) => {
   //Check Email có tồn tại không.
   try {
     let email = await checkEmailService(req.body.email);
+    console.log(email);
     if (!email) {
       //Nếu email không tồn tại
       next();

@@ -9,6 +9,7 @@ var jwt = require('jsonwebtoken');
 let signUpController = async (req, res) => {
   try {
     // let user = await signUpService(req.body); 
+    console.log("signUpController: ", req.body);
     await signUpService(req.body);
     return res.json({
       error: false,
@@ -20,20 +21,20 @@ let signUpController = async (req, res) => {
       return res.json({
         error: true,
         status: 400,
-        message: "Đăng ký không thành công signUpController"
+        message: "Đăng ký không thành công"
       });
     }
   }
 }
 
-let loginController = (req, res) => { 
+let loginController = (req, res) => {
   bcrypt.compare(req.body.password, req.user.password, function (err, results) {
- 
-    if (err) {  
+
+    if (err) {
       return res.json({
         error: true,
         status: 500,
-        message: "Lỗi server login Controller"
+        message: "Lỗi server"
       });
     }
     if (!results) {
@@ -41,7 +42,7 @@ let loginController = (req, res) => {
       return res.json({
         error: false,
         status: 400,
-        message: "Sai tài khoản hoặc password"
+        message: "Sai password"
       });
     } else {
 
@@ -63,7 +64,7 @@ let loginController = (req, res) => {
 }
 
 let checkAuthController = (req, res) => {
-  var user = req.userLocal 
+  var user = req.userLocal
   if (user.role === "admin") {
     return res.render("homeAdmin");
   }

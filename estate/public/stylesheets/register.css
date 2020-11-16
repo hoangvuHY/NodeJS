@@ -1,0 +1,41 @@
+*{margin: 0;padding: 0;}
+ 
+span  {
+    color: red;
+} 
+.md-form input,select#role {
+    border: none;
+    border-bottom: 1px solid #CED4DA;
+}
+
+.md-form input:focus,select#role:focus {
+    border-bottom: 2px solid #3F80EA;
+    outline: none;
+    box-shadow: none;
+}
+
+button.btn.btn-outline-info.btn-rounded.btn-block.my-4.waves-effect.z-depth-0 {
+    border-radius: 21px;
+    transition: 0.5s;
+}
+
+.md-form label {
+    text-align: left !important;
+    display: block;
+    margin-left: 15px;
+    margin-bottom: 2px;
+    margin-top: 10px;
+}
+
+.col-md-8.col-sm-4.col-xs-8.card {
+    box-shadow: 0px 0px 20px 2px rgba(0, 0, 255, .2);
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    margin: 15px auto 20px;
+    transition: 0.5s;
+    width: 60%;
+}
+
+h5.card-header.info-color.white-text.text-center.py-4 {background: #33B5E5;border-radius: 10px;color: white;}
+ 

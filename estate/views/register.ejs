@@ -1,0 +1,89 @@
+<%include ./header-footer/header %>
+
+<!-- Form -->
+<div class="col-md-6 col-sm-4 col-xs-6 card mt-0 pt-0">
+
+  <h5 class="card-header info-color white-text text-center py-4">
+    <strong>Sign up</strong>
+  </h5>
+
+  <!--Card content-->
+  <div class="card-body px-lg-5 pt-0  text-center" style="color: #757575;">
+
+    <!-- Form -->
+    <form>
+      <!-- name -->
+      <div class="md-form">
+        <label for="name">Name</label>
+        <input type="text" id="name" class="form-control">
+      </div>
+      <div class="md-form">
+        <label for="birthday">Birthday</label>
+        <input type="date" id="birthday" class="form-control">
+      </div>
+      <!-- phone -->
+      <div class="md-form">
+        <label for="phone">Phone</label>
+        <input type="number" id="phone" class="form-control">
+      </div>
+      <!-- address -->
+      <div class="md-form">
+        <label for="address">Address</label>
+        <input type="text" id="address" class="form-control">
+      </div>
+      <!-- Identification -->
+      <div class="md-form">
+        <label for="identification">Identification</label>
+        <input type="number" id="identification" class="form-control">
+      </div>
+      <!-- username -->
+      <div class="md-form">
+        <label for="username">username</label>
+        <input type="text" id="username" class="form-control">
+      </div>
+      <!-- Email -->
+      <div class="md-form">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" class="form-control">
+      </div>
+      <!-- Password -->
+      <div class="md-form">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control">
+      </div>
+      <!-- Password -->
+      <div class="md-form">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="password" class="form-control">
+      </div>
+      <!-- Sign in button -->
+      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+        id="btnSignin">Register</button>
+
+      <!-- Social login -->
+
+      <a type="button" class="btn-floating btn-fb btn-sm">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a type="button" class="btn-floating btn-tw btn-sm">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a type="button" class="btn-floating btn-li btn-sm">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a type="button" class="btn-floating btn-git btn-sm">
+        <i class="fab fa-github"></i>
+      </a>
+
+      <!-- Register -->
+      <p>Is a member?
+        <a href="/login">Login</a>
+      </p>
+    </form>
+  </div>
+
+
+</div>
+
+
+<%include ./header-footer/footer %>
