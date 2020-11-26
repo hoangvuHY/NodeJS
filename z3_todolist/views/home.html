@@ -158,7 +158,7 @@
 
     function handleSave() {
       var _id = $(this).attr('data-id');
-      var email = $(this).parent().children().find("input#email-" + _id).val();
+      var email = $(this)cfind("input#email-" + _id).val();
       var username = $(this).parent().children().find("input#username-" + _id).val();
       var password = $(this).parent().children().find("input#password-" + _id).val();
       var age = $(this).parent().children().find("input#age-" + _id).val();

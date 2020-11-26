@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+</head>
+
+<body>
+  <h2>Demo Socket io</h2>
+  <form>
+    <input type="text" id="text">
+    <input type="reset" value="Send" id="send">
+    <h5 id="content"></h5>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+    var socket = io("http://localhost:3000");
+
+    socket.on('server-emit', (data) => {
+      $("#content").html(data);
+    })
+
+    $(document).ready(function () {
+      $("#send").click(() => {
+        // alert("Ad")
+        var text = $("#text").val();
+        socket.emit("demo", text);
+      })
+    });
+  </script>
+</body>
+
+</html>
