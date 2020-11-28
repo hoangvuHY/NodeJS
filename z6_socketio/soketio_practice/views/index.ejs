@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Socket.IO chat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font: 13px Helvetica, Arial;
+    }
+
+    form {
+      background: #000;
+      padding: 3px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    form input {
+      border: 0;
+      padding: 10px;
+      width: 90%;
+      margin-right: 0.5%;
+    }
+
+    form button {
+      width: 9%;
+      background: rgb(130, 224, 255);
+      border: none;
+      padding: 10px;
+    }
+
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages li {
+      padding: 5px 10px;
+    }
+
+    #messages li:nth-child(odd) {
+      background: #eee;
+    }
+
+
+    .send,
+    .receive {
+
+      background: skyblue !important;
+      text-align: right;
+      width: 300px;
+      position: relative;
+      right: calc(300px - 90%);
+      border-radius: 5px 0 0 5px;
+      margin-top: 5px;
+    }
+
+    .receive {
+      text-align: left;
+      border-radius: 5px 0 0 5px;
+      border-radius: 0 5px 5px 0;
+      right: 0;
+    }
+
+    .nickname_sendnickname_send {
+      color: black;
+      display: inline-block;
+      position: absolute;
+      top: 27px;
+      left: 0px;
+    }
+
+    .nickname_sendnickname_send {
+
+      display: inline-block;
+      background: none !IMPORTANT;
+    }
+  </style>
+</head>
+
+<body>
+  Nickname: <input id="nickname" autocomplete="off" />
+  <ul id="messages"></ul>
+  <form action="">
+    <input id="m" autocomplete="off" /><button>Send</button>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script>
+    var socket = io('http://localhost:3000');
+    $(function () {
+      var socket = io();
+      $('form').submit(function (e) {
+        e.preventDefault(); // prevents page reloading
+        socket.emit('chat message', {
+          nickname: $('#nickname').val(),
+          message: $('#m').val()
+        });
+        // Them message vao ben nguoi gui 
+        var p = $("<p>").append(($("<li class='nickname_send'>").text($('#nickname').val())));
+        var p_ = $("<p>").append(($("<li class='send'>").text($('#m').val())));
+        $("#messages").append(p);
+        $("#messages").append(p_);
+        $('#m').val('');
+        return false;
+      });
+      socket.on('server to client', (msg) => {
+        console.log(msg);
+
+        $("#messages").append($("<span  class='nickname_receive'>").text(msg.nickname));
+
+        $("#messages").append($("<li class='receive'>").text(msg.message));
+
+      })
+    });
+  </script>
+</body>
+
+</html>

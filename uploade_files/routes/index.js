@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
 });
 
 var images = [];
-/* POST home page. */
+/* POST home page. Gửi trực tiếp vào file*/
 router.post('/uploadfile', upload.any(), function (req, res, next) {
 
   images.push(req.files[0].path);
