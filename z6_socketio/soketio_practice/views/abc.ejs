@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Socket.IO chat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font: 13px Helvetica, Arial;
+    }
+
+    form {
+      background: #000;
+      padding: 3px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    form input {
+      border: 0;
+      padding: 10px;
+      width: 90%;
+      margin-right: 0.5%;
+    }
+
+    form button {
+      width: 9%;
+      background: rgb(130, 224, 255);
+      border: none;
+      padding: 10px;
+    }
+
+    #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #messages li {
+      padding: 5px 10px;
+    }
+
+    #messages li:nth-child(odd) {
+      background: #eee;
+    }
+
+
+    .send,
+    .receive {
+
+      background: skyblue !important;
+      text-align: right;
+      width: 300px;
+      position: relative;
+      right: calc(300px - 90%);
+      border-radius: 5px 0 0 5px;
+      margin-top: 5px;
+    }
+
+    .receive {
+      text-align: left;
+      border-radius: 5px 0 0 5px;
+      border-radius: 0 5px 5px 0;
+      right: 0;
+    }
+
+    .nickname_sendnickname_send {
+      color: black;
+      display: inline-block;
+      position: absolute;
+      top: 27px;
+      left: 0px;
+    }
+
+    .nickname_sendnickname_send {
+
+      display: inline-block;
+      background: none !IMPORTANT;
+    }
+
+    .notifyjs-foo-base {
+      opacity: 0.85;
+      width: 200px;
+      background: #F5F5F5;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    .notifyjs-foo-base .title {
+      width: 100px;
+      float: left;
+      margin: 10px 0 0 10px;
+      text-align: right;
+    }
+
+    .notifyjs-foo-base .buttons {
+      width: 70px;
+      float: right;
+      font-size: 9px;
+      padding: 5px;
+      margin: 2px;
+    }
+
+    .notifyjs-foo-base button {
+      font-size: 9px;
+      padding: 5px;
+      margin: 2px;
+      width: 60px;
+    }
+  </style>
+</head>
+
+<body onload="notifyMe()">
+  Nickname: <input id="nickname" autocomplete="off" />
+  <ul id="messages"></ul>
+  <form action="">
+    <input id="m" autocomplete="off" /><button>Send</button>
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+  <script>
+    var socket = io('http://localhost:3000');
+
+
+    function notifyMe() {
+      socket.on('server to client', (msg) => {
+
+        $.notify.addStyle('foo', {
+          html:
+            ` 
+  <div>
+    <div class='clearfix'>
+      <div class='title' data-notify-html='title'></div>
+      <button class='no'>Cancel</button>
+      <button class='yes' data-notify-text='button'></button>
+    </div>
+  </div>
+ 
+          `
+        });
+        //listen for click events from this style
+        $(document).on('click', '.notifyjs-foo-base .no', function () {
+          //programmatically trigger propogating hide event
+          $(this).trigger('notify-hide');
+        });
+        $(document).on('click', '.notifyjs-foo-base .yes', function () {
+          //show button text
+          alert($(this).text() + " clicked!");
+          //hide notification
+          $(this).trigger('notify-hide');
+        });
+
+        $.notify({
+          title: `${msg.message}`,
+          button: 'YES !'
+        }, {
+          style: 'foo',
+          autoHide: false,
+          clickToHide: false
+        });
+
+
+
+
+        /* 
+                console.log(msg);
+        
+                $("#messages").append($("<span  class='nickname_receive'>").text());
+        
+                $("#messages").append($("<li class='receive'>").text(msg.message)); */
+
+      })
+    } 
+  </script>
+</body>
+
+</html>
