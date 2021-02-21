@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1>Login</h1>
+  <p>Welcome to Login
+  </p>
+
+  <form>
+    <input type="text" id='email'>
+    <input type="text" id='password'>
+    <input type="button" id='submit' value="Submit">
+    <input type="button" value='Get Token' id="btn">
+  </form>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+  $("#submit").click(() => {
+    var email = $("#email").val(), password = $("#password").val();
+    $.ajax({
+      url: '/login',
+      type: 'post',
+      data: { email, password }
+    }).then((data) => {
+      localStorage.setItem('token', data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  })
+  $("#btn").click(() => {
+    $.ajax({
+      url: '/private',
+      type: 'get',
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem('token')
+      },
+    }).then((data) => {
+      console.log(data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  })
+
+</script>
+
+</html>
